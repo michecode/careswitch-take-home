@@ -6,11 +6,10 @@
 	import PencilIcon from 'lucide-svelte/icons/pencil';
 	import DeleteIcon from 'lucide-svelte/icons/trash-2';
 
-	export let users: User[];
-	export let workspaces: Workspace[];
+	let { users, workspaces }: { users: User[]; workspaces: Workspace[] } = $props();
 </script>
 
-<Table.Root>
+<Table.Root class="w-full">
 	<Table.Header>
 		<Table.Row>
 			<Table.Head>Name</Table.Head>
@@ -51,5 +50,10 @@
 				</Table.Cell>
 			</Table.Row>
 		{/each}
+		{#if users.length === 0}
+			<Table.Row>
+				<Table.Cell>No Users</Table.Cell>
+			</Table.Row>
+		{/if}
 	</Table.Body>
 </Table.Root>

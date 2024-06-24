@@ -6,8 +6,10 @@
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 
-	export let validatedForm: SuperValidated<Infer<EditUserFormSchema>>;
-	export let user: User;
+	let {
+		validatedForm,
+		user
+	}: { validatedForm: SuperValidated<Infer<EditUserFormSchema>>; user: User } = $props();
 
 	const form = superForm(validatedForm, {
 		validators: zodClient(editUserFormSchema)

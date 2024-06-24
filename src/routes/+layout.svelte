@@ -26,9 +26,8 @@
 <ModeWatcher />
 
 <div>
-	<!-- header -->
-	<div class="flex h-16 items-center justify-between">
-		<p class="px-8 py-6 text-4xl">🙀🤭🤥😁</p>
+	<header class="flex h-16 items-center justify-between">
+		<p class="px-8 py-6 text-2xl">ACME User Solutions</p>
 		<div class="mr-4">
 			<Button variant="ghost" size="icon" on:click={toggleMode}>
 				{#if $mode === 'light'}
@@ -38,17 +37,18 @@
 				{/if}
 			</Button>
 		</div>
-	</div>
-	<!-- body -->
-	<div class="flex">
-		<div class="ml-8 mt-8 flex h-screen w-1/6 flex-col space-y-4">
+	</header>
+	<main class="flex">
+		<nav class="ml-8 mt-8 flex h-screen w-1/6 flex-col space-y-4">
 			{#each sidebarLinks as link}
 				<a href={link.route} class="flex items-center space-x-4">
 					<svelte:component this={link.icon} />
 					<p class="text-xl">{link.title}</p>
 				</a>
 			{/each}
+		</nav>
+		<div class="w-5/6 rounded-xl border-l-2 border-t-2 p-4">
+			<div class="mx-8">{@render children()}</div>
 		</div>
-		<div class="w-5/6 rounded-xl border-l-2 border-t-2 p-4">{@render children()}</div>
-	</div>
+	</main>
 </div>

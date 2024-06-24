@@ -1,11 +1,102 @@
 <script lang="ts">
+	import Button from '$lib/components/ui/button/button.svelte';
+	import * as Card from '$lib/components/ui/card';
+	import { Input } from '$lib/components/ui/input';
+	import * as Select from '$lib/components/ui/select/';
 	import UserTable from '$lib/UserTable.svelte';
+	import AddUserIcon from 'lucide-svelte/icons/user-plus';
 
 	let { data } = $props();
+
+	let searchValue = $state('');
+	let workspaceIdFilter = $state('');
+	let filteredUsers = $derived.by(() => {
+		if (!searchValue && !workspaceIdFilter) {
+			return data.users;
+		}
+
+		return data.users.filter((user) => {
+			// name filtering
+			if (searchValue && !user.name.toLowerCase().includes(searchValue.toLowerCase())) {
+				return false;
+			}
+
+			// workspace filtering
+			if (
+				workspaceIdFilter &&
+				!user.workspaces.some(({ workspaceId }) => workspaceId === workspaceIdFilter)
+			) {
+				return false;
+			}
+
+			return true;
+		});
+	});
+
+	const cardData = [
+		{
+			title: 'Total Users',
+			value: data.users.length
+		},
+		{
+			title: 'Active Users',
+			value: 48
+		},
+		{
+			title: 'Open Tickets',
+			value: 28
+		},
+		{
+			title: 'Pending Invites',
+			value: 4
+		}
+	];
 </script>
 
-<div class="mx-auto mt-8 max-w-3xl px-4 sm:px-6 lg:px-8">
-	<div class="space-y-6 rounded-md p-4 dark:border">
-		<UserTable users={data.users} workspaces={data.workspaces} />
+<div class="">
+	<!-- header -->
+	<div class="mb-8 mt-2 flex items-center justify-between">
+		<div class="">
+			<p class="text-4xl">Users</p>
+			<p class="text-xs text-gray-400">Manage All Users Here</p>
+		</div>
+		<div>
+			<Button class="space-x-2">
+				<AddUserIcon />
+				<p>Add User</p>
+			</Button>
+		</div>
+	</div>
+	<!-- cards -->
+	<div class="my-4 flex justify-around space-x-4">
+		{#each cardData as singleCard}
+			<Card.Root class="flex-grow">
+				<Card.Header>
+					<Card.Title>{singleCard.title}</Card.Title>
+				</Card.Header>
+				<Card.Content>
+					<p class="text-2xl font-bold">{singleCard.value}</p>
+				</Card.Content>
+			</Card.Root>
+		{/each}
+	</div>
+	<!-- filters -->
+	<div class="mb-3 mt-8 flex justify-end space-x-2">
+		<Select.Root>
+			<Select.Trigger class="w-[180px]">
+				<Select.Value placeholder="Filter by Workspace" />
+			</Select.Trigger>
+			<Select.Content>
+				{#each data.workspaces as workspace}
+					<Select.Item value={workspace.name} on:click={() => (workspaceIdFilter = workspace.id)}
+						>{workspace.name}</Select.Item
+					>
+				{/each}
+			</Select.Content>
+		</Select.Root>
+		<Input placeholder="Filter by Name" bind:value={searchValue} class="w-60" />
+	</div>
+	<div class="w-full rounded-md border-2">
+		<UserTable users={filteredUsers} workspaces={data.workspaces} />
 	</div>
 </div>
