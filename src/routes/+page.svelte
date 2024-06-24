@@ -4,12 +4,16 @@
 	import { Input } from '$lib/components/ui/input';
 	import * as Select from '$lib/components/ui/select/';
 	import UserTable from '$lib/UserTable.svelte';
-	import AddUserIcon from 'lucide-svelte/icons/user-plus';
+	import type { WorkspaceUser } from '@prisma/client';
+	import type { Selected } from 'bits-ui';
+	import { Eraser as EraserIcon, UserPlus as AddUserIcon } from 'lucide-svelte';
 
 	let { data } = $props();
 
 	let searchValue = $state('');
-	let workspaceIdFilter = $state('');
+	let workspaceFilter = $state(undefined) as Selected<string> | undefined;
+	let workspaceIdFilter = $derived(workspaceFilter?.value);
+	$inspect(workspaceFilter, workspaceIdFilter);
 	let filteredUsers = $derived.by(() => {
 		if (!searchValue && !workspaceIdFilter) {
 			return data.users;
@@ -82,15 +86,25 @@
 	</div>
 	<!-- filters -->
 	<div class="mb-3 mt-8 flex justify-end space-x-2">
-		<Select.Root>
+		{#if searchValue || workspaceIdFilter}
+			<Button
+				on:click={() => {
+					searchValue = '';
+					workspaceFilter = undefined;
+				}}
+				class="space-x-2"
+			>
+				<EraserIcon />
+				<p>Clear Filters</p>
+			</Button>
+		{/if}
+		<Select.Root bind:selected={workspaceFilter}>
 			<Select.Trigger class="w-[180px]">
 				<Select.Value placeholder="Filter by Workspace" />
 			</Select.Trigger>
 			<Select.Content>
 				{#each data.workspaces as workspace}
-					<Select.Item value={workspace.name} on:click={() => (workspaceIdFilter = workspace.id)}
-						>{workspace.name}</Select.Item
-					>
+					<Select.Item value={workspace.name}>{workspace.name}</Select.Item>
 				{/each}
 			</Select.Content>
 		</Select.Root>
