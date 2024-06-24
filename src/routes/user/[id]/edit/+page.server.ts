@@ -16,13 +16,12 @@ export const load = async ({ params }) => {
 
 	return {
 		user,
-		editUserForm: await superValidate(zod(editUserFormSchema))
+		editUserForm: await superValidate(user, zod(editUserFormSchema))
 	};
 };
 
 export const actions = {
 	default: async (event) => {
-		// const formData = await event.request.formData();
 		const form = await superValidate(event, zod(editUserFormSchema));
 		if (!form.valid) {
 			return fail(400, {
@@ -31,17 +30,16 @@ export const actions = {
 		}
 
 		try {
-			// const userId = formData.get('userId');
-
 			const updatedUser = await prisma.user.update({
-				where: { email: 'alice_jen@awesome.com' },
+				where: { id: event.params.id },
 				data: {
 					name: form.data.name,
 					email: form.data.email
 				}
 			});
-			console.log(updatedUser);
+			console.log(`Updated user with id: ${event.params.id}`, updatedUser);
 		} catch (e) {
+			console.log(e);
 			return fail(400, { form });
 		}
 
