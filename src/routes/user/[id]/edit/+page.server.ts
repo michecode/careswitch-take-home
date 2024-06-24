@@ -1,6 +1,6 @@
 import { prisma } from '$lib/server/db';
 import { superValidate } from 'sveltekit-superforms';
-import { editUserFormSchema } from '../../../schema';
+import { userFormSchema } from '../../../schema';
 import { zod } from 'sveltekit-superforms/adapters';
 import { error, fail } from '@sveltejs/kit';
 
@@ -16,13 +16,13 @@ export const load = async ({ params }) => {
 
 	return {
 		user,
-		editUserForm: await superValidate(user, zod(editUserFormSchema))
+		userForm: await superValidate(user, zod(userFormSchema))
 	};
 };
 
 export const actions = {
 	default: async (event) => {
-		const form = await superValidate(event, zod(editUserFormSchema));
+		const form = await superValidate(event, zod(userFormSchema));
 		if (!form.valid) {
 			return fail(400, {
 				form

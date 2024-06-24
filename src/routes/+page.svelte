@@ -63,10 +63,13 @@
 			<p class="text-xs text-gray-400">Manage All Users Here</p>
 		</div>
 		<div>
-			<Button class="space-x-2">
+			<a
+				href="/user/add"
+				class="inline-flex items-center justify-center space-x-2 rounded-md border border-input p-2 hover:bg-accent hover:text-accent-foreground"
+			>
 				<AddUserIcon />
 				<p>Add User</p>
-			</Button>
+			</a>
 		</div>
 	</div>
 	<!-- cards -->

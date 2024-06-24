@@ -6,5 +6,5 @@
 
 <div>
 	<p class="text-4xl font-bold">Edit User</p>
-	<EditUserForm validatedForm={data.editUserForm} user={data.user} />
+	<EditUserForm validatedForm={data.userForm} user={data.user} buttonText="Update User" />
 </div>
