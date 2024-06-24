@@ -6,6 +6,7 @@
 	import SunIcon from 'lucide-svelte/icons/sun';
 	import UserIcon from 'lucide-svelte/icons/user-round';
 	import WorkspaceIcon from 'lucide-svelte/icons/component';
+	import { Toaster } from '$lib/components/ui/sonner';
 
 	let { children } = $props();
 
@@ -24,6 +25,7 @@
 </script>
 
 <ModeWatcher />
+<Toaster />
 
 <div>
 	<header class="flex h-16 items-center justify-between">

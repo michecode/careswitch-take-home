@@ -5,6 +5,7 @@
 	import { userFormSchema, type UserFormSchema } from '../routes/schema';
 	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
 	import { zodClient } from 'sveltekit-superforms/adapters';
+	import { toast } from 'svelte-sonner';
 
 	let {
 		validatedForm,
@@ -17,7 +18,18 @@
 	} = $props();
 
 	const form = superForm(validatedForm, {
-		validators: zodClient(userFormSchema)
+		validators: zodClient(userFormSchema),
+		onResult: (event) => {
+			if (event.result.status === 200) {
+				toast('Success!');
+			} else if (event.result.status === 400) {
+				toast('Action Failed');
+			} else {
+				toast('Unknown Error');
+			}
+		},
+		resetForm: false,
+		invalidateAll: false
 	});
 
 	const { form: formData, enhance, isTainted, tainted } = form;
