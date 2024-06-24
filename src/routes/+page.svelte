@@ -4,7 +4,6 @@
 	import { Input } from '$lib/components/ui/input';
 	import * as Select from '$lib/components/ui/select/';
 	import UserTable from '$lib/UserTable.svelte';
-	import type { WorkspaceUser } from '@prisma/client';
 	import type { Selected } from 'bits-ui';
 	import { Eraser as EraserIcon, UserPlus as AddUserIcon } from 'lucide-svelte';
 
@@ -13,7 +12,6 @@
 	let searchValue = $state('');
 	let workspaceFilter = $state(undefined) as Selected<string> | undefined;
 	let workspaceIdFilter = $derived(workspaceFilter?.value);
-	$inspect(workspaceFilter, workspaceIdFilter);
 	let filteredUsers = $derived.by(() => {
 		if (!searchValue && !workspaceIdFilter) {
 			return data.users;
