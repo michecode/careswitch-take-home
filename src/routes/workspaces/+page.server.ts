@@ -26,6 +26,9 @@ export const actions = {
 		}
 
 		try {
+			await prisma.workspaceUser.deleteMany({
+				where: { workspaceId: form.data.id }
+			});
 			const updatedWorkspace = await prisma.workspace.delete({ where: { id: form.data.id } });
 			console.log(`Deleted workspace with id: ${form.data.id}`, updatedWorkspace);
 		} catch (e) {

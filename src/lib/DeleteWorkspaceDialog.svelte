@@ -4,7 +4,7 @@
 	import * as Dialog from './components/ui/dialog';
 	import * as Form from './components/ui/form';
 	import { superForm, type Infer, type SuperValidated } from 'sveltekit-superforms';
-	import { deleteUserSchema, type DeleteWorkspaceSchema } from '../routes/schema';
+	import { deleteWorkspaceSchema, type DeleteWorkspaceSchema } from '../routes/schema';
 	import { zodClient } from 'sveltekit-superforms/adapters';
 	import { Input } from './components/ui/input/';
 
@@ -15,7 +15,7 @@
 		$props();
 
 	const form = superForm(deleteWorkspaceForm, {
-		validators: zodClient(deleteUserSchema)
+		validators: zodClient(deleteWorkspaceSchema)
 	});
 
 	const { form: formData, enhance } = form;
