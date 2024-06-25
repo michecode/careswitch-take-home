@@ -11,6 +11,7 @@
 		validatedForm={data.workspaceForm}
 		workspace={data.workspace}
 		users={data.users}
+		allUsers={data.allUsers}
 		buttonText="Update Workspace"
 	/>
 </div>

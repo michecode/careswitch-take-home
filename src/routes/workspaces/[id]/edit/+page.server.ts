@@ -6,6 +6,7 @@ import { error, fail } from '@sveltejs/kit';
 
 export const load = async ({ params }) => {
 	const workspace = await prisma.workspace.findUnique({ where: { id: params.id } });
+	const allUsers = await prisma.user.findMany();
 	const users = await prisma.user.findMany({
 		where: { workspaces: { some: { workspaceId: params.id } } },
 		include: { workspaces: true }
@@ -18,6 +19,7 @@ export const load = async ({ params }) => {
 	return {
 		workspace,
 		users,
+		allUsers,
 		workspaceForm: await superValidate({ name: workspace.name, users }, zod(workspaceFormSchema))
 	};
 };

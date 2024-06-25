@@ -11,6 +11,7 @@
 		validatedForm={data.workspaceForm}
 		workspace={null}
 		users={null}
+		allUsers={null}
 		buttonText="Create Workspace"
 	/>
 </div>
