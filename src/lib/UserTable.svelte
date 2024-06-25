@@ -21,7 +21,6 @@
 		workspaces: Workspace[];
 		deleteUserForm: SuperValidated<Infer<DeleteUserSchema>>;
 	} = $props();
-	console.log(users);
 </script>
 
 <Table.Root class="w-full">
