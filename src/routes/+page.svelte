@@ -105,7 +105,7 @@
 			</Select.Trigger>
 			<Select.Content>
 				{#each data.workspaces as workspace}
-					<Select.Item value={workspace.name}>{workspace.name}</Select.Item>
+					<Select.Item value={workspace.id}>{workspace.name}</Select.Item>
 				{/each}
 			</Select.Content>
 		</Select.Root>
