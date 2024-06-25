@@ -5,6 +5,7 @@
 </script>
 
 <div>
-	<p class="text-4xl font-bold">Edit User</p>
+	<p class="mt-2 text-4xl">Edit User</p>
+	<p class="mb-8 text-xs text-gray-400">Editing this user</p>
 	<EditUserForm validatedForm={data.userForm} user={data.user} buttonText="Update User" />
 </div>

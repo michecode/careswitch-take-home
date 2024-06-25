@@ -50,7 +50,7 @@
 				</Table.Cell>
 				<Table.Cell class="flex gap-2">
 					<a
-						href={`/user/${workspace.id}/edit`}
+						href={`/workspaces/${workspace.id}/edit`}
 						class="inline-flex h-10 w-10 items-center justify-center rounded-md hover:bg-accent hover:text-accent-foreground"
 					>
 						<PencilIcon size="20px" />

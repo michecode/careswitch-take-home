@@ -16,7 +16,7 @@
 			class="inline-flex items-center justify-center space-x-2 rounded-md border border-input p-2 hover:bg-accent hover:text-accent-foreground"
 		>
 			<PackagePlusIcon />
-			<p>Add Workspace</p>
+			<p>New Workspace</p>
 		</a>
 	</div>
 </div>
