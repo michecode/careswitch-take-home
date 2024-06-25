@@ -10,7 +10,13 @@ export const deleteUserSchema = z.object({
 });
 
 export const workspaceFormSchema = z.object({
-	name: z.string().min(1).max(50)
+	name: z.string().min(1).max(50),
+	users: z.array(
+		z.object({
+			id: z.string().cuid(),
+			name: z.string()
+		})
+	)
 });
 
 export const deleteWorkspaceSchema = z.object({

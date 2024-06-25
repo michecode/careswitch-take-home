@@ -10,6 +10,7 @@
 	<WorkspaceForm
 		validatedForm={data.workspaceForm}
 		workspace={data.workspace}
+		users={data.users}
 		buttonText="Update Workspace"
 	/>
 </div>
