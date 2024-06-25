@@ -5,6 +5,7 @@
 	import PencilIcon from 'lucide-svelte/icons/pencil';
 	import { type Infer, type SuperValidated } from 'sveltekit-superforms';
 	import { type DeleteWorkspaceSchema } from '../routes/schema';
+	import DeleteWorkspaceDialog from './DeleteWorkspaceDialog.svelte';
 
 	type UserWithWorkspaces = User & {
 		workspaces: WorkspaceUser[];
@@ -54,7 +55,7 @@
 					>
 						<PencilIcon size="20px" />
 					</a>
-					<!-- <DeleteUserDialog userId={user.id} {deleteUserForm} /> -->
+					<DeleteWorkspaceDialog workspaceId={workspace.id} {deleteWorkspaceForm} />
 				</Table.Cell>
 			</Table.Row>
 		{/each}
