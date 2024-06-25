@@ -2,11 +2,20 @@
 	import * as Table from '$lib/components/ui/table';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import type { User, Workspace } from '@prisma/client';
-	import { Button } from '$lib/components/ui/button/index';
 	import PencilIcon from 'lucide-svelte/icons/pencil';
-	import DeleteIcon from 'lucide-svelte/icons/trash-2';
+	import { type Infer, type SuperValidated } from 'sveltekit-superforms';
+	import { type DeleteUserSchema } from '../routes/schema';
+	import DeleteUserDialog from './DeleteUserDialog.svelte';
 
-	let { users, workspaces }: { users: User[]; workspaces: Workspace[] } = $props();
+	let {
+		users,
+		workspaces,
+		deleteUserForm
+	}: {
+		users: User[];
+		workspaces: Workspace[];
+		deleteUserForm: SuperValidated<Infer<DeleteUserSchema>>;
+	} = $props();
 </script>
 
 <Table.Root class="w-full">
@@ -44,9 +53,7 @@
 					>
 						<PencilIcon size="20px" />
 					</a>
-					<Button variant="ghost" size="icon">
-						<DeleteIcon size="20px" />
-					</Button>
+					<DeleteUserDialog userId={user.id} {deleteUserForm} />
 				</Table.Cell>
 			</Table.Row>
 		{/each}

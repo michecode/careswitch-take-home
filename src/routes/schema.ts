@@ -5,4 +5,9 @@ export const userFormSchema = z.object({
 	email: z.string().email()
 });
 
+export const deleteUserSchema = z.object({
+	id: z.string().cuid()
+});
+
 export type UserFormSchema = typeof userFormSchema;
+export type DeleteUserSchema = typeof deleteUserSchema;

@@ -112,6 +112,10 @@
 		<Input placeholder="Filter by Name" bind:value={searchValue} class="w-60" />
 	</div>
 	<div class="w-full rounded-md border-2">
-		<UserTable users={filteredUsers} workspaces={data.workspaces} />
+		<UserTable
+			users={filteredUsers}
+			workspaces={data.workspaces}
+			deleteUserForm={data.deleteUserForm}
+		/>
 	</div>
 </div>
