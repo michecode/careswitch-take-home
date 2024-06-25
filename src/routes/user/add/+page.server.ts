@@ -20,11 +20,24 @@ export const actions = {
 		}
 
 		try {
+			const generalWorkspace = await prisma.workspace.findUnique({ where: { name: 'general' } });
+			if (!generalWorkspace) {
+				console.log('failed to find generic workspace');
+				return fail(400, { form });
+			}
+
 			const updatedUser = await prisma.user.create({
 				data: {
 					name: form.data.name,
 					email: form.data.email,
 					dateAdded: new Date()
+				}
+			});
+
+			await prisma.workspaceUser.create({
+				data: {
+					userId: updatedUser.id,
+					workspaceId: generalWorkspace.id
 				}
 			});
 			console.log(`Created user with id: ${updatedUser.id}`, updatedUser);

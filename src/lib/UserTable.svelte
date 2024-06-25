@@ -1,21 +1,27 @@
 <script lang="ts">
 	import * as Table from '$lib/components/ui/table';
 	import * as Avatar from '$lib/components/ui/avatar';
-	import type { User, Workspace } from '@prisma/client';
+	import type { User, Workspace, WorkspaceUser } from '@prisma/client';
 	import PencilIcon from 'lucide-svelte/icons/pencil';
 	import { type Infer, type SuperValidated } from 'sveltekit-superforms';
 	import { type DeleteUserSchema } from '../routes/schema';
 	import DeleteUserDialog from './DeleteUserDialog.svelte';
+	import Badge from './components/ui/badge/badge.svelte';
+
+	type UserWithWorkspaces = User & {
+		workspaces: WorkspaceUser[];
+	};
 
 	let {
 		users,
 		workspaces,
 		deleteUserForm
 	}: {
-		users: User[];
+		users: UserWithWorkspaces[];
 		workspaces: Workspace[];
 		deleteUserForm: SuperValidated<Infer<DeleteUserSchema>>;
 	} = $props();
+	console.log(users);
 </script>
 
 <Table.Root class="w-full">
@@ -43,7 +49,16 @@
 						</div>
 					</div>
 				</Table.Cell>
-				<Table.Cell>test</Table.Cell>
+				<Table.Cell class="">
+					<div class="flex max-w-60 flex-wrap space-x-2 space-y-1">
+						{#each user.workspaces as workspace}
+							<Badge
+								>{workspaces.find((namedWorkspace) => namedWorkspace.id === workspace.workspaceId)
+									?.name}</Badge
+							>
+						{/each}
+					</div>
+				</Table.Cell>
 				<Table.Cell>{user.lastLogin ? user.lastLogin.toDateString() : '-'}</Table.Cell>
 				<Table.Cell>{user.dateAdded.toDateString()}</Table.Cell>
 				<Table.Cell class="flex gap-2">
